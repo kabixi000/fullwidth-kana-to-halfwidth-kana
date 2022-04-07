@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>全角カタカナ→半角カタカナ</title>
+  </head>
+  <body>
+    <h2>全角カタカナ→半角カタカナ</h2>
+    <input id="in">
+    <button id="enc">ア→ｱ</button>
+    <input id="out">
+    <script>
+      const input = document.getElementById('in')
+      const output = document.getElementById('out')
+      const encBtn = document.getElementById('enc')
+
+      const kanaMap = {
+      "ガ": "ｶﾞ", "ギ": "ｷﾞ", "グ": "ｸﾞ", "ゲ": "ｹﾞ", "ゴ": "ｺﾞ",
+      "ザ": "ｻﾞ", "ジ": "ｼﾞ", "ズ": "ｽﾞ", "ゼ": "ｾﾞ", "ゾ": "ｿﾞ",
+      "ダ": "ﾀﾞ", "ヂ": "ﾁﾞ", "ヅ": "ﾂﾞ", "デ": "ﾃﾞ", "ド": "ﾄﾞ",
+      "バ": "ﾊﾞ", "ビ": "ﾋﾞ", "ブ": "ﾌﾞ", "ベ": "ﾍﾞ", "ボ": "ﾎﾞ",
+      "パ": "ﾊﾟ", "ピ": "ﾋﾟ", "プ": "ﾌﾟ", "ペ": "ﾍﾟ", "ポ": "ﾎﾟ",
+      "ヴ": "ｳﾞ", "ヷ": "ﾜﾞ", "ヺ": "ｦﾞ",
+      "ア": "ｱ", "イ": "ｲ", "ウ": "ｳ", "エ": "ｴ", "オ": "ｵ",
+      "カ": "ｶ", "キ": "ｷ", "ク": "ｸ", "ケ": "ｹ", "コ": "ｺ",
+      "サ": "ｻ", "シ": "ｼ", "ス": "ｽ", "セ": "ｾ", "ソ": "ｿ",
+      "タ": "ﾀ", "チ": "ﾁ", "ツ": "ﾂ", "テ": "ﾃ", "ト": "ﾄ",
+      "ナ": "ﾅ", "ニ": "ﾆ", "ヌ": "ﾇ", "ネ": "ﾈ", "ノ": "ﾉ",
+      "ハ": "ﾊ", "ヒ": "ﾋ", "フ": "ﾌ", "ヘ": "ﾍ", "ホ": "ﾎ",
+      "マ": "ﾏ", "ミ": "ﾐ", "ム": "ﾑ", "メ": "ﾒ", "モ": "ﾓ",
+      "ヤ": "ﾔ", "ユ": "ﾕ", "ヨ": "ﾖ",
+      "ラ": "ﾗ", "リ": "ﾘ", "ル": "ﾙ", "レ": "ﾚ", "ロ": "ﾛ",
+      "ワ": "ﾜ", "ヲ": "ｦ", "ン": "ﾝ",
+      "ァ": "ｧ", "ィ": "ｨ", "ゥ": "ｩ", "ェ": "ｪ", "ォ": "ｫ",
+      "ッ": "ｯ", "ャ": "ｬ", "ュ": "ｭ", "ョ": "ｮ",
+      "。": "｡", "、": "､", "ー": "ｰ", "「": "｢", "」": "｣", "・": "･"
+    }
+
+    const smallKanaMap = {
+      'ｧ':'ｱ',
+      'ｨ':'ｲ',
+      'ｩ':'ｳ',
+      'ｪ':'ｴ',
+      'ｫ':'ｵ',
+      'ｬ':'ﾔ',
+      'ｭ':'ﾕ',
+      'ｮ':'ﾖ'
+    }
+
+    const reg = new RegExp('(' + Object.keys(kanaMap).join('|') + ')', 'g')
+
+    const half = (srcString) => {
+      return srcString
+        .replace(reg, function (match) {
+          return kanaMap[match]
+        })
+        .replace(/゛/g, 'ﾞ')
+        .replace(/゜/g, 'ﾟ')
+    }
+
+    const smallReg = new RegExp('(' + Object.keys(smallKanaMap).join('|') + ')', 'g')
+
+    const smallToLarge = (srcString) => {
+      return srcString
+        .replace(smallReg, function (match) {
+          return smallKanaMap[match]
+        })
+    }
+
+      encBtn.addEventListener('click',(ev)=>{
+        output.value = smallToLarge(half(input.value))
+      })
+    </script>
+  </body>
+</html>
